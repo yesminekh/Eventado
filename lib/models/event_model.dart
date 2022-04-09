@@ -6,7 +6,7 @@ class Event {
   String image;
   String location;
   String organizer;
-  num price;
+  int price;
 
   Event({
     required this.id,

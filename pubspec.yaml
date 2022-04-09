@@ -43,11 +43,11 @@ dependencies:
   shared_preferences: ^2.0.13
   sqflite: ^2.0.2
   font_awesome_flutter: ^9.2.0
-  flutter_local_notifications: ^6.0.0
-  timezone: ^0.7.0
+  flutter_local_notifications: ^9.2.0
   flutter_facebook_auth: ^4.1.1
   fluttertoast: ^8.0.9
   badges: ^2.0.2
+  
 
 
 

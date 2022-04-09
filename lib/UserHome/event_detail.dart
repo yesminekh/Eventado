@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:timezone/data/latest.dart' as tz;
 import '../constant/text_style.dart';
+import '../utils/notification.dart';
 import '../utils/size_config.dart';
 import '../widgets/ui_helper.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -39,7 +39,6 @@ class _ProductDetailsState extends State<ProductDetails> {
   void initState() {
     fetchedEvents = fetchEvents();
     super.initState();
-    tz.initializeTimeZones();
   }
 
   @override
@@ -80,7 +79,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                       alignment: Alignment.centerRight,
                       child: InkWell(
                         customBorder: const CircleBorder(),
-                        onTap: () => setState(() => isFavorite = !isFavorite),
+                        onTap: () => //setState(() => isFavorite = !isFavorite),
+                            sendNotification(
+                                body:
+                                    "My first flutteffffffffffffffr notification",
+                                title: "Hello worlffffffffffffffffffffd"),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Icon(

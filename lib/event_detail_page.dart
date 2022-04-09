@@ -197,7 +197,6 @@ class _EventDetailPageState extends State<EventDetailPage>
               child: InkWell(
                 customBorder: const CircleBorder(),
                 onTap: () => setState(() => isFavorite = !isFavorite),
-                // addToFavorite(),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Icon(
