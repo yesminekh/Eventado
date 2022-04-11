@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:path/path.dart' as path;
 import 'package:pim/constant/color.dart';
 import 'package:pim/constant/text_style.dart';
 import 'package:pim/models/event_model.dart';
@@ -9,6 +8,8 @@ import 'package:pim/utils/notification.dart';
 import 'package:pim/utils/sql_helper.dart';
 import 'package:pim/widgets/ui_helper.dart';
 
+import 'nft_page.dart';
+import 'payementPaypal.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -50,9 +51,8 @@ class _EventDetailPageState extends State<EventDetailPage>
           if (!bodyScrollAnimationController.isCompleted)
             bodyScrollAnimationController.forward();
         } else {
-          if (bodyScrollAnimationController.isCompleted) {
+          if (bodyScrollAnimationController.isCompleted)
             bodyScrollAnimationController.reverse();
-          }
         }
       });
 
@@ -101,6 +101,8 @@ class _EventDetailPageState extends State<EventDetailPage>
                           buildEventDate(),
                           UIHelper.verticalSpace(24),
                           buildAboutEvent(),
+                          UIHelper.verticalSpace(24),
+                          getNFT(),
                           UIHelper.verticalSpace(24),
                           //...List.generate(10, (index) => ListTile(title: Text("Dummy content"))).toList(),
                         ],
@@ -184,9 +186,8 @@ class _EventDetailPageState extends State<EventDetailPage>
               margin: const EdgeInsets.all(0),
               child: InkWell(
                 onTap: () {
-                  if (bodyScrollAnimationController.isCompleted) {
+                  if (bodyScrollAnimationController.isCompleted)
                     bodyScrollAnimationController.reverse();
-                  }
                   Navigator.of(context).pop();
                 },
                 child: Padding(
@@ -320,6 +321,10 @@ class _EventDetailPageState extends State<EventDetailPage>
               primary: Theme.of(context).primaryColor,
             ),
             onPressed: () async {
+              var prix = event.price;
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => paymentPaypal(prix)));
+
               print(event.id);
 
               SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -357,6 +362,57 @@ class _EventDetailPageState extends State<EventDetailPage>
             },
             child: Text(
               "Get a Ticket",
+              style: titleStyle.copyWith(
+                  color: Colors.white, fontWeight: FontWeight.normal),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget getNFT() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      color: Colors.white,
+      child: Row(
+        children: <Widget>[
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              const Text("Price", style: subtitleStyle),
+              UIHelper.verticalSpace(8),
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                        text: "\$${event.price}",
+                        style: titleStyle.copyWith(
+                            color: Theme.of(context).primaryColor)),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const Spacer(),
+          const Spacer(),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              shape: const StadiumBorder(),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              primary: Theme.of(context).primaryColor,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Nftpage(event),
+                ),
+              );
+            },
+            child: Text(
+              "Get NFT now",
               style: titleStyle.copyWith(
                   color: Colors.white, fontWeight: FontWeight.normal),
             ),

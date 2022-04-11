@@ -135,7 +135,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               context, MaterialPageRoute(builder: (context) => Messages()));
         },
         child: Badge(
-          badgeContent: Text('12'),
+          badgeContent: const Text('12'),
           child: const Icon(Icons.message_outlined),
         ),
       ),

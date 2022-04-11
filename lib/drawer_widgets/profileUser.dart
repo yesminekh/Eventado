@@ -62,9 +62,9 @@ class _ProfileeState extends State<Profilee> {
       builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
         if (snapshot.hasData) {
           return Scaffold(
-            backgroundColor: Color(0xFFEDECF2),
+            backgroundColor: const Color(0xFFEDECF2),
             appBar: AppBar(
-              backgroundColor: Color(0xFFEDECF2),
+              backgroundColor: const Color(0xFFEDECF2),
               elevation: 0.0,
             ),
             body: ListView(
