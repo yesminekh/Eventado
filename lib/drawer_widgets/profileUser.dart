@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../main.dart';
 import '../models/profil_model.dart';
 import '../utils/sql_helper.dart';
 
@@ -27,8 +28,15 @@ class _ProfileeState extends State<Profilee> {
     setState(() {
       _journals = data;
       _isLoading = false;
-      print(_journals);
     });
+  }
+
+  void _deleteItem(int id) async {
+    await SQLHelper.deleteItem(id);
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text('Successfully deleted !'),
+    ));
+    _refreshJournals();
   }
 
   late Future<bool> fetchedUser;
@@ -76,7 +84,7 @@ class _ProfileeState extends State<Profilee> {
                                 image: AssetImage('assets/images/Avatar.PNG'))),
                       ),
                     ),
-                    SizedBox(height: 25.0),
+                    const SizedBox(height: 25.0),
                     Text(
                       f_name,
                       style: const TextStyle(
@@ -87,7 +95,7 @@ class _ProfileeState extends State<Profilee> {
                     const SizedBox(height: 4.0),
                     Text(
                       _username,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontFamily: 'Montserrat', color: Colors.grey),
                     ),
                     Padding(
@@ -117,7 +125,7 @@ class _ProfileeState extends State<Profilee> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const <Widget>[
                               Text(
-                                '31',
+                                '3',
                                 style: TextStyle(
                                     fontFamily: 'Montserrat',
                                     fontWeight: FontWeight.bold),
@@ -152,13 +160,9 @@ class _ProfileeState extends State<Profilee> {
                         ],
                       ),
                     ),
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.only(left: 15.0),
                     ),
-                    //buildImages(),
-                    //buildInfoDetail(),
-                    //buildImages(),
-                    //buildInfoDetail(),
                     buildMyevents()
                   ],
                 )
@@ -175,7 +179,7 @@ class _ProfileeState extends State<Profilee> {
   }
 
   Widget buildMyevents() {
-    return Container(
+    return SizedBox(
       height: 500,
       child: Scaffold(
         body: _isLoading
@@ -185,113 +189,35 @@ class _ProfileeState extends State<Profilee> {
             : ListView.builder(
                 itemCount: _journals.length,
                 itemBuilder: (context, index) => Card(
-                  color: Colors.orange[200],
+                  color: const Color(0xFFEDECF2),
                   margin: const EdgeInsets.all(15),
                   child: ListTile(
-                      title: Text(_journals[index]['title']),
-                      subtitle: Text(_journals[index]['description']),
-                      trailing: const SizedBox(
-                        width: 100,
-                      )),
-                ),
-              ),
-        floatingActionButton: FloatingActionButton(
-            child: const Icon(Icons.add), onPressed: () => {}),
-      ),
-    );
-  }
-
-  Widget buildImages() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
-      child: Container(
-          height: 200.0,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15.0),
-              image: const DecorationImage(
-                  image: AssetImage('assets/images/Capture.PNG'),
-                  fit: BoxFit.cover))),
-    );
-  }
-
-  Widget buildInfoDetail() {
-    return Padding(
-      padding: const EdgeInsets.only(
-          left: 25.0, right: 25.0, top: 10.0, bottom: 15.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              const Text(
-                'om Kalthoum Metaverse',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Montserrat',
-                    fontSize: 15.0),
-              ),
-              const SizedBox(height: 7.0),
-              Row(
-                children: <Widget>[
-                  Text(
-                    'Teresa Soto',
-                    style: TextStyle(
-                        color: Colors.grey.shade700,
-                        fontFamily: 'Montserrat',
-                        fontSize: 11.0),
+                    leading: Text((_journals[index]['description'])
+                        .toString()
+                        .substring(11, 16)),
+                    title: Text(_journals[index]['title']),
+                    subtitle: Text((_journals[index]['description'])
+                        .toString()
+                        .substring(0, 10)),
+                    trailing: SizedBox(
+                      width: 100,
+                      child: Row(
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.calendar_month),
+                            onPressed: () => {},
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.delete),
+                            onPressed: () =>
+                                _deleteItem(_journals[index]['id']),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                  SizedBox(width: 4.0),
-                  const Icon(
-                    Icons.timer,
-                    size: 4.0,
-                    color: Colors.black,
-                  ),
-                  SizedBox(width: 4.0),
-                  Text(
-                    '3 Videos',
-                    style: TextStyle(
-                        color: Colors.grey.shade500,
-                        fontFamily: 'Montserrat',
-                        fontSize: 11.0),
-                  )
-                ],
-              )
-            ],
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(width: 7.0),
-              InkWell(
-                onTap: () {},
-                child: Container(
-                  height: 20.0,
-                  width: 20.0,
-                  child: Image.asset('assets/images/navarrow.png'),
                 ),
               ),
-              SizedBox(width: 7.0),
-              InkWell(
-                onTap: () {},
-                child: Container(
-                  height: 20.0,
-                  width: 20.0,
-                  child: Image.asset('assets/images/chatbubble.png'),
-                ),
-              ),
-              SizedBox(width: 7.0),
-              InkWell(
-                onTap: () {},
-                child: Container(
-                  height: 22.0,
-                  width: 22.0,
-                  child: Image.asset('assets/images/fav.png'),
-                ),
-              )
-            ],
-          )
-        ],
       ),
     );
   }

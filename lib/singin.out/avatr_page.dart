@@ -4,174 +4,110 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pim/singin.out/verifier_page.dart';
 import '../main.dart';
+import 'avatar.dart';
 
-class Avatar extends StatefulWidget {
+class AvatarPage extends StatefulWidget {
   @override
-  AvatarForm createState() => AvatarForm();
+  State<StatefulWidget> createState() => _AvatarPageState();
 }
 
-class AvatarForm extends State<Avatar> {
+class _AvatarPageState extends State<AvatarPage> {
+  static final formKey = GlobalKey<FormState>();
+
+  String _name = '';
+
+  FocusNode _focusNode = new FocusNode();
+
+  void _updateName(String name) {
+    final form = formKey.currentState;
+    if (form!.validate()) {
+      form.save();
+      setState(() {});
+      print('Saved: $_name');
+    }
+  }
+
+  void _clear() {
+    final form = formKey.currentState;
+    form!.reset();
+    FocusScope.of(context).requestFocus(_focusNode);
+  }
+
   @override
   Widget build(BuildContext context) {
+    var children = [
+      _buildInputForm(),
+    ];
+    if (_name.length > 0) {
+      var url = 'https://robohash.org/$_name';
+      var avatar = Avatar(url: url, size: 150.0);
+      children.addAll([
+        VerticalPadding(child: avatar),
+        VerticalPadding(child: Text('Courtesy of robohash.org')),
+      ]);
+    }
+
+    children.addAll([
+      Expanded(child: Container()),
+      Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
+        VerticalPadding(
+            child: FlatButton(
+          child: Text('Clear', style: new TextStyle(fontSize: 24.0)),
+          onPressed: _clear,
+        ))
+      ])
+    ]);
+
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white.withOpacity(0),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-            size: 30,
+        title: const Text('Greeting'),
+        backgroundColor: const Color(0xFFEDECF2),
+      ),
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Center(
+          child: Column(
+            children: children,
           ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.symmetric(
-                horizontal: 30,
-              ),
-              child: Column(
-                children: [
-                  const Text(
-                    "Add Image",
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const ImageProfile(),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const SizedBox(height: 35),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      shape: const StadiumBorder(),
-                      primary: color,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 125,
-                        vertical: 13,
-                      ),
-                    ),
-                    child: const Text(
-                      'CONFIRM',
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Verifier(),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ],
+    );
+  }
+
+  Widget _buildInputForm() {
+    var children = [
+      VerticalPadding(
+          child: TextFormField(
+        focusNode: _focusNode,
+        decoration: const InputDecoration(
+          labelText: 'Enter your unique identifier',
+          labelStyle: TextStyle(fontSize: 20.0),
         ),
+        style: const TextStyle(fontSize: 24.0, color: Colors.black),
+        validator: (val) => val!.isEmpty ? 'Name can\'t be empty' : null,
+        onSaved: (name) => _name = name!,
+        onFieldSubmitted: (name) => _updateName(name),
+      ))
+    ];
+
+    return Form(
+      key: formKey,
+      child: Column(
+        children: children,
       ),
     );
   }
 }
 
-class ImageProfile extends StatefulWidget {
-  const ImageProfile({Key? key}) : super(key: key);
+class VerticalPadding extends StatelessWidget {
+  VerticalPadding({required this.child});
+  final Widget child;
 
-  @override
-  _ImageProfileState createState() => _ImageProfileState();
-}
-
-class _ImageProfileState extends State<ImageProfile> {
-  File? image;
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Stack(
-        children: <Widget>[
-          const Spacer(),
-          image != null
-              ? ClipOval(
-                  child: Image.file(
-                  image!,
-                  width: 160,
-                  height: 160,
-                  fit: BoxFit.cover,
-                ))
-              : const CircleAvatar(
-                  radius: 80.0,
-                  backgroundImage: AssetImage("assets/images/user.jpg"),
-                ),
-          Positioned(
-            bottom: 20.0,
-            right: 20.0,
-            child: InkWell(
-                onTap: () {
-                  showModalBottomSheet(
-                      context: context, builder: ((Builder) => bottomSheet()));
-                },
-                child: const Icon(
-                  Icons.camera_alt,
-                  color: Colors.teal,
-                  size: 28.0,
-                )),
-          ),
-        ],
-      ),
-    ); // one above another ( icon above image)
-  }
-
-  Widget bottomSheet() {
-    return Container(
-      height: 100.0,
-      width: MediaQuery.of(context).size.width,
-      margin: const EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 20,
-      ),
-      child: Column(
-        children: <Widget>[
-          const Text(
-            "choose Profile Photo",
-            style: TextStyle(fontSize: 20.0),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              TextButton.icon(
-                  onPressed: () {
-                    takePhoto(ImageSource.camera);
-                  },
-                  icon: const Icon(Icons.camera),
-                  label: const Text("Camera")),
-              TextButton.icon(
-                  onPressed: () {
-                    takePhoto(ImageSource.gallery);
-                  },
-                  icon: const Icon(Icons.image),
-                  label: const Text("Gallery"))
-            ],
-          )
-        ],
-      ),
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 8.0),
+      child: child,
     );
-  }
-
-  Future takePhoto(ImageSource source) async {
-    try {
-      final image = await ImagePicker().pickImage(source: source);
-      if (image == null) return;
-      final imageTemporary = File(image.path);
-      setState(() => this.image = imageTemporary);
-    } on PlatformException catch (e) {
-      print("failed to pick image: $e");
-    }
   }
 }

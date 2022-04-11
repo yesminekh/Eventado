@@ -1,4 +1,5 @@
 import 'package:sqflite/sqflite.dart' as sql;
+import 'package:flutter/foundation.dart';
 
 class SQLHelper {
   static Future<void> createTables(sql.Database database) async {
@@ -37,7 +38,7 @@ class SQLHelper {
     final db = await SQLHelper.db();
     return db.query('items', orderBy: "id");
   }
-/*
+
   // Read a single item by id
   // The app doesn't use this method but I put here in case you want to see it
   static Future<List<Map<String, dynamic>>> getItem(int id) async {
@@ -65,9 +66,9 @@ class SQLHelper {
   static Future<void> deleteItem(int id) async {
     final db = await SQLHelper.db();
     try {
-      await db.delete("events", where: "id = ?", whereArgs: [id]);
+      await db.delete("items", where: "id = ?", whereArgs: [id]);
     } catch (err) {
-      debugPrint("Something went wrong when deleting an event: $err");
+      debugPrint("Something went wrong when deleting an item: $err");
     }
-  }*/
+  }
 }

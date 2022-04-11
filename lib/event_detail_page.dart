@@ -34,7 +34,7 @@ class _EventDetailPageState extends State<EventDetailPage>
   bool isFavorite = false;
 
   Future<void> _addItem() async {
-    await SQLHelper.createItem(event.name, event.image);
+    await SQLHelper.createItem(event.name, event.eventDate);
   }
 
   @override

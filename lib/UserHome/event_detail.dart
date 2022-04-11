@@ -81,9 +81,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         customBorder: const CircleBorder(),
                         onTap: () => //setState(() => isFavorite = !isFavorite),
                             sendNotification(
-                                body:
-                                    "My first flutteffffffffffffffr notification",
-                                title: "Hello worlffffffffffffffffffffd"),
+                                body: "Join the Room", title: "Eventado"),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Icon(

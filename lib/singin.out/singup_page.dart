@@ -10,10 +10,10 @@ class SingUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.cyan[50],
+      backgroundColor: Color(0xFFEDECF2),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.cyan[50],
+        backgroundColor: Color(0xFFEDECF2),
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
@@ -289,7 +289,7 @@ class _SinupFormFormState extends State<SinupForm> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const MyHomePage(),
+                          builder: (context) => AvatarPage(),
                         ),
                       );
                     } else {
