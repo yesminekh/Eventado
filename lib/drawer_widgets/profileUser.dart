@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/profil_model.dart';
+import '../utils/sql_helper.dart';
 
 class Profilee extends StatefulWidget {
   @override
@@ -18,20 +19,31 @@ class _ProfileeState extends State<Profilee> {
   late String _email;
   late SharedPreferences prefs;
 
+  List<Map<String, dynamic>> _journals = [];
+  bool _isLoading = true;
+
+  void _refreshJournals() async {
+    final data = await SQLHelper.getItems();
+    setState(() {
+      _journals = data;
+      _isLoading = false;
+      print(_journals);
+    });
+  }
+
   late Future<bool> fetchedUser;
   Future<bool> fetchUser() async {
     prefs = await SharedPreferences.getInstance();
-    //_id = prefs.getString("userId")!;
     f_name = prefs.getString("f_name")!;
     _username = prefs.getString("username")!;
     _email = prefs.getString("email")!;
-
     return true;
   }
 
   @override
   void initState() {
     fetchedUser = fetchUser();
+    _refreshJournals();
     super.initState();
   }
 
@@ -142,21 +154,12 @@ class _ProfileeState extends State<Profilee> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 15.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: const <Widget>[
-                          //IconButton(icon: Icon(Icons.table_chart)),
-                          //IconButton(
-                          //icon: Icon(Icons.menu),
-                          //onPressed: () {},
-                          //)
-                        ],
-                      ),
                     ),
-                    buildImages(),
-                    buildInfoDetail(),
-                    buildImages(),
-                    buildInfoDetail(),
+                    //buildImages(),
+                    //buildInfoDetail(),
+                    //buildImages(),
+                    //buildInfoDetail(),
+                    buildMyevents()
                   ],
                 )
               ],
@@ -164,10 +167,37 @@ class _ProfileeState extends State<Profilee> {
           );
         } else {
           return const Scaffold(
-            body: Text('reeee'),
+            body: Text('error'),
           );
         }
       },
+    );
+  }
+
+  Widget buildMyevents() {
+    return Container(
+      height: 500,
+      child: Scaffold(
+        body: _isLoading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : ListView.builder(
+                itemCount: _journals.length,
+                itemBuilder: (context, index) => Card(
+                  color: Colors.orange[200],
+                  margin: const EdgeInsets.all(15),
+                  child: ListTile(
+                      title: Text(_journals[index]['title']),
+                      subtitle: Text(_journals[index]['description']),
+                      trailing: const SizedBox(
+                        width: 100,
+                      )),
+                ),
+              ),
+        floatingActionButton: FloatingActionButton(
+            child: const Icon(Icons.add), onPressed: () => {}),
+      ),
     );
   }
 

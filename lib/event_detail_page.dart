@@ -1,9 +1,12 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:path/path.dart' as path;
 import 'package:pim/constant/color.dart';
 import 'package:pim/constant/text_style.dart';
 import 'package:pim/models/event_model.dart';
+import 'package:pim/utils/notification.dart';
+import 'package:pim/utils/sql_helper.dart';
 import 'package:pim/widgets/ui_helper.dart';
 
 import 'package:http/http.dart' as http;
@@ -29,6 +32,11 @@ class _EventDetailPageState extends State<EventDetailPage>
   late Animation<double> appBarSlide;
   double headerImageSize = 0;
   bool isFavorite = false;
+
+  Future<void> _addItem() async {
+    await SQLHelper.createItem(event.name, event.image);
+  }
+
   @override
   void initState() {
     event = widget.event;
@@ -42,8 +50,9 @@ class _EventDetailPageState extends State<EventDetailPage>
           if (!bodyScrollAnimationController.isCompleted)
             bodyScrollAnimationController.forward();
         } else {
-          if (bodyScrollAnimationController.isCompleted)
+          if (bodyScrollAnimationController.isCompleted) {
             bodyScrollAnimationController.reverse();
+          }
         }
       });
 
@@ -175,8 +184,9 @@ class _EventDetailPageState extends State<EventDetailPage>
               margin: const EdgeInsets.all(0),
               child: InkWell(
                 onTap: () {
-                  if (bodyScrollAnimationController.isCompleted)
+                  if (bodyScrollAnimationController.isCompleted) {
                     bodyScrollAnimationController.reverse();
+                  }
                   Navigator.of(context).pop();
                 },
                 child: Padding(
@@ -196,7 +206,10 @@ class _EventDetailPageState extends State<EventDetailPage>
               elevation: 0,
               child: InkWell(
                 customBorder: const CircleBorder(),
-                onTap: () => setState(() => isFavorite = !isFavorite),
+                onTap: () async => {
+                  setState(() => isFavorite = !isFavorite),
+                  await _addItem()
+                },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Icon(
@@ -321,8 +334,26 @@ class _EventDetailPageState extends State<EventDetailPage>
                 "Content-Type": "application/json; charset=UTF-8"
               };
 
-              http.post(Uri.https("10.0.2.2:3000", "/eventRegister"),
-                  headers: headers, body: json.encode(eventRegisterData));
+              http
+                  .post(Uri.https("eventado.herokuapp.com", "/eventRegister"),
+                      headers: headers, body: json.encode(eventRegisterData))
+                  .then((http.Response response) {
+                if (response.statusCode == 200) {
+                  sendNotification(
+                      body:
+                          "You have registred successfully you'll receive an admission code ",
+                      title: event.name);
+                } else {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext) {
+                        return const AlertDialog(
+                          title: Text("Information"),
+                          content: Text("An error has occurred. Try Again"),
+                        );
+                      });
+                }
+              });
             },
             child: Text(
               "Get a Ticket",
