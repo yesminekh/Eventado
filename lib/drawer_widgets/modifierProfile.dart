@@ -1,9 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:pim/UserHome/home.dart';
 import 'package:pim/drawer_widgets/Profile_page.dart';
 import 'package:pim/main.dart';
 import 'package:http/http.dart' as http;
@@ -64,9 +61,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFEDECF2),
+      backgroundColor: const Color(0xFFEDECF2),
       appBar: AppBar(
-        backgroundColor: Color(0xFFEDECF2),
+        backgroundColor: const Color(0xFFEDECF2),
         title: const Text("Informations"),
         leading: IconButton(
           icon: const Icon(
@@ -79,7 +76,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         ),
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 16, top: 25, right: 16),
+        padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
         child: ListView(
           children: [
             Text("Edit your Informations", style: headingStyle),
@@ -93,10 +90,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.caption,
                 ),
-                Icon(Icons.verified_user_rounded),
+                const Icon(Icons.verified_user_rounded),
               ],
             ),
-            SizedBox(height: SizeConfig.screenHeight * 0.03),
+            SizedBox(height: SizeConfig.screenHeight * 0.06),
             Form(
               key: _formKey,
               child: Column(
@@ -164,7 +161,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     },
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 200,
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -208,7 +205,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Profile(),
+                                builder: (context) => const Profile(),
                               ),
                             );
                           } else {

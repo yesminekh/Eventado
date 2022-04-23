@@ -47,16 +47,16 @@ class Resset extends StatelessWidget {
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     floatingLabelBehavior: FloatingLabelBehavior.always,
-                    suffixIcon: Icon(Icons.email),
+                    suffixIcon: const Icon(Icons.email),
                     hintText: "Your Email",
                     labelStyle: TextStyle(
                       color: Colors.grey[400],
                     ),
-                    border: UnderlineInputBorder(
-                      borderRadius: const BorderRadius.all(
-                        const Radius.circular(5.4),
+                    border: const UnderlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5.4),
                       ),
-                      borderSide: new BorderSide(
+                      borderSide: BorderSide(
                         color: Colors.black,
                         width: 1.0,
                       ),
@@ -120,7 +120,8 @@ class Resset extends StatelessWidget {
                             builder: (BuildContext context) {
                               return const AlertDialog(
                                 title: Text("Try Again"),
-                                content: Text("Invalid Email"),
+                                content: Text(
+                                    "The email address undefined is not associated with any account. Check your email address and try again"),
                               );
                             });
                       }

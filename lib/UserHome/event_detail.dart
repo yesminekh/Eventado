@@ -114,9 +114,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 children: <Widget>[
                                   Icon(Icons.access_time_outlined),
                                   UIHelper.horizontalSpace(4),
-                                  Text(
-                                      _date.toString().substring(11, 16) +
-                                          " PM",
+                                  Text(_date.toString().substring(11, 16) + " ",
                                       style: subtitleStyle),
                                 ],
                               ),

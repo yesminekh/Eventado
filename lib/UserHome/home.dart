@@ -194,7 +194,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              const Text("Recommendations", style: headerStyle),
+              const Text("Near by Concerts", style: headerStyle),
               const Spacer(),
               const Icon(Icons.more_horiz),
               UIHelper.horizontalSpace(16),
@@ -219,7 +219,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   offset: Offset(animation.value, 0.0),
                   child: NearbyEventCard(
                     event: event,
-                    onTap: () => viewEventDetail(event),
+                    onTap: () => {},
                   ),
                 ),
               );

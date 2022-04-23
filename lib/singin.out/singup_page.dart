@@ -62,7 +62,7 @@ class SingUp extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => facebook(),
+                          builder: (context) => const facebook(),
                         ),
                       );
                     },
@@ -82,7 +82,7 @@ class SingUp extends StatelessWidget {
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
                         shape: const StadiumBorder(),
-                        primary: Color.fromARGB(255, 255, 255, 255),
+                        primary: const Color.fromARGB(255, 255, 255, 255),
                         padding: const EdgeInsets.all(13),
                         textStyle: const TextStyle(
                           color: Colors.black,
@@ -127,7 +127,6 @@ class _SinupFormFormState extends State<SinupForm> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
       margin: const EdgeInsets.symmetric(
         horizontal: 30,
@@ -182,7 +181,7 @@ class _SinupFormFormState extends State<SinupForm> {
             TextFormField(
               decoration: const InputDecoration(
                   suffixIcon: Icon(Icons.face),
-                  labelText: "Choose your UserName",
+                  labelText: "Choose your Username",
                   labelStyle: TextStyle(
                     color: color,
                   ),
@@ -203,7 +202,7 @@ class _SinupFormFormState extends State<SinupForm> {
               obscureText: _obscureText,
               decoration: InputDecoration(
                 border: const UnderlineInputBorder(),
-                labelStyle: TextStyle(
+                labelStyle: const TextStyle(
                   color: color,
                 ),
                 labelText: 'Password',
@@ -235,7 +234,7 @@ class _SinupFormFormState extends State<SinupForm> {
               obscureText: _obscureText,
               decoration: InputDecoration(
                 border: const UnderlineInputBorder(),
-                labelStyle: TextStyle(
+                labelStyle: const TextStyle(
                   color: color,
                 ),
                 labelText: 'ConfirmPassword',

@@ -186,8 +186,9 @@ class _EventDetailPageState extends State<EventDetailPage>
               margin: const EdgeInsets.all(0),
               child: InkWell(
                 onTap: () {
-                  if (bodyScrollAnimationController.isCompleted)
+                  if (bodyScrollAnimationController.isCompleted) {
                     bodyScrollAnimationController.reverse();
+                  }
                   Navigator.of(context).pop();
                 },
                 child: Padding(

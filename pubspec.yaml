@@ -49,6 +49,7 @@ dependencies:
   fluttertoast: ^8.0.9
   badges: ^2.0.2
   webview_flutter: ^3.0.2
+  
 
   
 

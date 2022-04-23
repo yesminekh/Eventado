@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pim/singin.out/facebook.dart';
 import 'package:pim/singin.out/resset_page.dart';
 import 'package:pim/singin.out/singup_page.dart';
-import '../main.dart';
-import '../UserHome/home.dart';
 import 'login_page.dart';
 
 class SocialPage extends StatelessWidget {
@@ -25,8 +23,7 @@ class SocialPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Image.network(
-                'https://imgs.search.brave.com/zUUR-SWKhhUkJSI57fwj0HzhvIzGCb66bR0NdweH4u0/rs:fit:474:225:1/g:ce/aHR0cHM6Ly90c2Uz/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5L/VGw5clIzTXVqZ3BC/eVpWcktWQk1nSGFI/YSZwaWQ9QXBp'),
+            Image.asset('assets/images/az.webp'),
             const SizedBox(height: 10),
             LoginForm(),
             Align(
@@ -36,7 +33,7 @@ class SocialPage extends StatelessWidget {
                 child: Row(
                   children: <Widget>[
                     const Expanded(
-                      child: Text("Forget your Password",
+                      child: Text("Forget your Password ?",
                           style: TextStyle(
                               fontSize: 15,
                               fontFamily: "Poppins-Bold",
@@ -77,7 +74,7 @@ class SocialPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => facebook(),
+                          builder: (context) => const facebook(),
                         ),
                       );
                     },

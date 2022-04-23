@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pim/singin.out/social_page.dart';
 
-import 'login_page.dart';
 import '../main.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -36,7 +35,7 @@ class _NewPasswordState extends State<NewPassword> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.symmetric(
+          margin: const EdgeInsets.symmetric(
             vertical: 100,
             horizontal: 30,
           ),
@@ -44,23 +43,23 @@ class _NewPasswordState extends State<NewPassword> {
             key: _keyForm,
             child: Column(
               children: [
-                Text(
+                const Text(
                   "Please Finish the process",
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 60),
                 TextFormField(
                   keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: "Your Email",
                     labelStyle: TextStyle(
                       color: Color.fromARGB(255, 10, 9, 9),
                     ),
                     border: UnderlineInputBorder(
-                      borderRadius: const BorderRadius.all(
-                        const Radius.circular(5.4),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5.4),
                       ),
-                      borderSide: new BorderSide(
+                      borderSide: BorderSide(
                         color: Colors.black,
                         width: 1.0,
                       ),
@@ -85,7 +84,7 @@ class _NewPasswordState extends State<NewPassword> {
                 TextFormField(
                   obscureText: _obscureText,
                   decoration: InputDecoration(
-                    hintText: "new password",
+                    hintText: "Enter Your New Password",
                     labelStyle: TextStyle(
                       color: Colors.grey[400],
                     ),
@@ -114,18 +113,18 @@ class _NewPasswordState extends State<NewPassword> {
                     _passwd = value;
                   },
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
                 TextFormField(
                   obscureText: _obscureText,
                   decoration: InputDecoration(
-                    hintText: "confirm password",
+                    hintText: "Comfirm Your Password",
                     labelStyle: TextStyle(
                       color: Colors.grey[400],
                     ),
                     suffixIcon: IconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.visibility,
                         color: Colors.black,
                       ),
@@ -135,23 +134,23 @@ class _NewPasswordState extends State<NewPassword> {
                         });
                       },
                     ),
-                    border: UnderlineInputBorder(
-                      borderRadius: const BorderRadius.all(
-                        const Radius.circular(0.0),
+                    border: const UnderlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(0.0),
                       ),
-                      borderSide: new BorderSide(
+                      borderSide: BorderSide(
                         color: Colors.black,
                         width: 1.0,
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    shape: StadiumBorder(),
+                    shape: const StadiumBorder(),
                     primary: color,
-                    padding: EdgeInsets.symmetric(
+                    padding: const EdgeInsets.symmetric(
                       horizontal: 25,
                       vertical: 10,
                     ),
@@ -160,7 +159,6 @@ class _NewPasswordState extends State<NewPassword> {
                     'CONFIRM',
                   ),
                   onPressed: () {
-                    print("tapped");
                     if (_keyForm.currentState!.validate()) {
                       _keyForm.currentState!.save();
                       Map<String, dynamic> userData = {

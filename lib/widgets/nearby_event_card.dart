@@ -50,7 +50,7 @@ class NearbyEventCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          // Text(DateTimeUtils.getFullDate(event.eventDate), style: monthStyle),
+          Text((event.eventDate), style: monthStyle),
           UIHelper.verticalSpace(8),
           Text(event.name, style: titleStyle),
           UIHelper.verticalSpace(8),

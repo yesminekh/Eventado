@@ -52,7 +52,7 @@ class WelcomePage extends StatelessWidget {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         primary: color,
-                        shape: StadiumBorder(),
+                        shape: const StadiumBorder(),
                         padding: const EdgeInsets.all(13)),
                     child: const Text('GET STARTED'),
                     onPressed: () {

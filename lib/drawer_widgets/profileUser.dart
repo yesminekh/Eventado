@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../main.dart';
-import '../models/profil_model.dart';
 import '../utils/sql_helper.dart';
 
 class Profilee extends StatefulWidget {

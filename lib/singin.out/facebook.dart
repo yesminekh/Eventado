@@ -87,19 +87,16 @@ class _facebookState extends State<facebook> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     _userData != null
-                        ? Text('name: ${_userData!['name']}')
+                        ? Text('Name: ${_userData!['name']}')
                         : Container(),
                     _userData != null
-                        ? Text('email: ${_userData!['email']}')
+                        ? Text('Email: ${_userData!['email']}')
                         : Container(),
                     _userData != null
-                        ? Container(
-                            child: Image.network(
-                                _userData!['picture']['data']['url']),
-                          )
+                        ? Image.network(_userData!['picture']['data']['url'])
                         : Container(),
                     const SizedBox(
-                      height: 20,
+                      height: 50,
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -168,7 +165,7 @@ class _facebookState extends State<facebook> {
                       },
                     ),
                     CupertinoButton(
-                        color: Colors.blue,
+                        color: color,
                         child: Text(
                           _userData != null ? 'LOGOUT' : 'LOGIN',
                           style: const TextStyle(color: Colors.white),

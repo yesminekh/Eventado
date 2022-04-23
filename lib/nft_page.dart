@@ -21,8 +21,7 @@ class Nftpage extends StatefulWidget {
   _NftpageState createState() => _NftpageState();
 }
 
-class _NftpageState extends State<Nftpage>
-    with TickerProviderStateMixin {
+class _NftpageState extends State<Nftpage> with TickerProviderStateMixin {
   late Event event;
   late AnimationController controller;
   late AnimationController bodyScrollAnimationController;
@@ -119,7 +118,6 @@ class _NftpageState extends State<Nftpage>
                     child: Material(
                       elevation: 2,
                       color: Theme.of(context).primaryColor,
-
                     ),
                   );
                 },
@@ -132,19 +130,15 @@ class _NftpageState extends State<Nftpage>
   }
 
   Widget buildHeaderImage() {
-    return
-      SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: 250,
-        child: Image.asset(
-          "assets/images/omkalthoum nFT.png",
-          fit: BoxFit.cover,
-        ),
-
-
-      );
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      height: 250,
+      child: Image.asset(
+        "assets/images/omkalthoum nFT.png",
+        fit: BoxFit.cover,
+      ),
+    );
   }
-
 
   Widget buildEventTitle() {
     return Text(
@@ -152,19 +146,20 @@ class _NftpageState extends State<Nftpage>
       style: headerStyle.copyWith(fontSize: 15),
     );
   }
+
   Widget buildAboutEvent() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         const Text("About", style: headerStyle),
         UIHelper.verticalSpace(),
-        Text("this is one of the first NFT's available for om kolthoum concert on eventado application",
+        Text(
+            "this is one of the first NFT's available for om kolthoum concert on eventado application",
             style: subtitleStyle),
         UIHelper.verticalSpace(2),
       ],
     );
   }
-
 
   Widget buildIDTOKEN() {
     return Column(
@@ -172,13 +167,15 @@ class _NftpageState extends State<Nftpage>
       children: <Widget>[
         const Text("TOKEN ID", style: headerStyle),
         UIHelper.verticalSpace(),
-        Text("105412073336139865871856758689961865379765593412174393695306829764487372865537",
+        Text(
+            "105412073336139865871856758689961865379765593412174393695306829764487372865537",
             style: subtitleStyle),
         UIHelper.verticalSpace(2),
       ],
     );
   }
-  Widget buildContactAdresse(){
+
+  Widget buildContactAdresse() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -190,16 +187,15 @@ class _NftpageState extends State<Nftpage>
       ],
     );
   }
+
   Widget buildBlockChaine() {
     return Row(
       children: <Widget>[
-
         Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text("Blockchaine",
-                style: subtitleStyle),
+          children: const <Widget>[
+            Text("Blockchain", style: subtitleStyle),
           ],
         ),
         const Spacer(),
@@ -209,7 +205,6 @@ class _NftpageState extends State<Nftpage>
               shape: StadiumBorder(), color: primaryLight),
         ),
         UIHelper.horizontalSpace(12),
-
         Container(
           decoration: BoxDecoration(
             color: primaryLight,
@@ -218,16 +213,14 @@ class _NftpageState extends State<Nftpage>
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Text("Etherum",
-                  style: monthStyle),
+            children: const <Widget>[
+              Text("Etherum", style: monthStyle),
             ],
           ),
         ),
       ],
     );
   }
-
 
   Widget buildPriceInfo() {
     return Container(
@@ -249,72 +242,71 @@ class _NftpageState extends State<Nftpage>
                         text: "\$${event.price}",
                         style: titleStyle.copyWith(
                             color: Theme.of(context).primaryColor)),
-
                   ],
                 ),
               ),
             ],
           ),
           const Spacer(),
-      ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          shape: const StadiumBorder(),
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          primary: Theme.of(context).primaryColor,
-        ),
-        onPressed: () {
-          showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  content: Stack(
-                    overflow: Overflow.visible,
-                    children: <Widget>[
-                      Positioned(
-                        right: -40.0,
-                        top: -40.0,
-                        child: InkResponse(
-                          onTap: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: CircleAvatar(
-                            child: Icon(Icons.close),
-                            backgroundColor: Colors.red,
-                          ),
-                        ),
-                      ),
-                      Form(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Text("connect etherum address"),
-
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: TextFormField(),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: RaisedButton(
-                                  child: Text("Buy Now"),
-                                  onPressed: () {
-                                    var prix=event.price ;
-                                    Navigator.push(context, MaterialPageRoute(
-                                        builder: (context)=> paymentPaypal(prix)
-                                    ));
-                                  }
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              shape: const StadiumBorder(),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              primary: Theme.of(context).primaryColor,
+            ),
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      content: Stack(
+                        overflow: Overflow.visible,
+                        children: <Widget>[
+                          Positioned(
+                            right: -40.0,
+                            top: -40.0,
+                            child: InkResponse(
+                              onTap: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: CircleAvatar(
+                                child: Icon(Icons.close),
+                                backgroundColor: Colors.red,
                               ),
-                            )
-                          ],
-                        ),
+                            ),
+                          ),
+                          Form(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Text("connect etherum address"),
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: TextFormField(),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: RaisedButton(
+                                      child: Text("Buy Now"),
+                                      onPressed: () {
+                                        var prix = event.price;
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    paymentPaypal(prix)));
+                                      }),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                );
-              });
-        },
-        child: Text("Buy nft "),
-      )/*async {
+                    );
+                  });
+            },
+            child: Text("Buy nft "),
+          ) /*async {
               print(event.id);
 
               SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -332,11 +324,8 @@ class _NftpageState extends State<Nftpage>
               http.post(Uri.https("10.0.2.2:3000", "/eventRegister"),
                   headers: headers, body: json.encode(eventRegisterData));
             },*/
-
         ],
       ),
     );
   }
-
-
 }

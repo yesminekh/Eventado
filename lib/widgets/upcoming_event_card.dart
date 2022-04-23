@@ -57,9 +57,10 @@ class UpComingEventCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              //Text(DateTimeUtils.getMonth(event.eventDate), style: monthStyle),
-              //Text(DateTimeUtils.getDayOfMonth(event.eventDate),
-              //style: titleStyle),
+              Text((event.eventDate).toString().substring(0, 10),
+                  style: monthStyle),
+              Text((event.eventDate).toString().substring(11, 16),
+                  style: titleStyle),
             ],
           ),
         ),

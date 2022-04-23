@@ -1,9 +1,5 @@
-import 'dart:io';
 import "package:flutter/material.dart";
-import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:pim/singin.out/verifier_page.dart';
-import '../main.dart';
+import 'package:pim/UserHome/home.dart';
 import 'avatar.dart';
 
 class AvatarPage extends StatefulWidget {
@@ -27,10 +23,12 @@ class _AvatarPageState extends State<AvatarPage> {
     }
   }
 
-  void _clear() {
-    final form = formKey.currentState;
-    form!.reset();
-    FocusScope.of(context).requestFocus(_focusNode);
+  void _continue() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const MyHomePage(),
+        ));
   }
 
   @override
@@ -38,12 +36,12 @@ class _AvatarPageState extends State<AvatarPage> {
     var children = [
       _buildInputForm(),
     ];
-    if (_name.length > 0) {
+    if (_name.isNotEmpty) {
       var url = 'https://robohash.org/$_name';
       var avatar = Avatar(url: url, size: 150.0);
       children.addAll([
         VerticalPadding(child: avatar),
-        VerticalPadding(child: Text('Courtesy of robohash.org')),
+        const VerticalPadding(child: Text('Courtesy of robohash.org')),
       ]);
     }
 
@@ -52,8 +50,8 @@ class _AvatarPageState extends State<AvatarPage> {
       Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
         VerticalPadding(
             child: FlatButton(
-          child: Text('Clear', style: new TextStyle(fontSize: 24.0)),
-          onPressed: _clear,
+          child: const Text('Continue', style: TextStyle(fontSize: 24.0)),
+          onPressed: _continue,
         ))
       ])
     ]);
@@ -100,13 +98,13 @@ class _AvatarPageState extends State<AvatarPage> {
 }
 
 class VerticalPadding extends StatelessWidget {
-  VerticalPadding({required this.child});
+  const VerticalPadding({required this.child});
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: child,
     );
   }

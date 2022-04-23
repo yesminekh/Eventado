@@ -11,7 +11,7 @@ class Verifier extends StatelessWidget {
           elevation: 0,
           backgroundColor: Colors.white.withOpacity(0),
           leading: IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.close,
               color: Colors.black,
               size: 30,
@@ -23,17 +23,17 @@ class Verifier extends StatelessWidget {
         ),
         body: SingleChildScrollView(
             child: Container(
-          margin: EdgeInsets.symmetric(
+          margin: const EdgeInsets.symmetric(
             vertical: 100,
             horizontal: 30,
           ),
           child: Column(
             children: [
               Container(
-                margin: EdgeInsets.symmetric(
+                margin: const EdgeInsets.symmetric(
                   horizontal: 40,
                 ),
-                child: Text("please enter your verification code"),
+                child: const Text("please enter your verification code"),
               ),
               SizedBox(height: 35),
               VerifierForm(),
@@ -42,12 +42,12 @@ class Verifier extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   shape: StadiumBorder(),
                   primary: color,
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: 25,
                     vertical: 10,
                   ),
                 ),
-                child: Text(
+                child: const Text(
                   'CONFIRM',
                 ),
                 onPressed: () {
@@ -62,7 +62,7 @@ class Verifier extends StatelessWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: Padding(
-                  padding: EdgeInsets.only(right: 35),
+                  padding: const EdgeInsets.only(right: 35),
                   child: Row(
                     children: <Widget>[
                       const Expanded(
