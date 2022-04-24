@@ -170,14 +170,16 @@ class _ProductDetailsState extends State<ProductDetails> {
                     UIHelper.verticalSpace(8),
                   ],
                 ),
-                Text((_rnd).toString()),
-                const SizedBox(width: 20),
+                Text((getRandomString(20))),
+                const SizedBox(height: 20),
                 RaisedButton(
                   onPressed: () {
                     var snackBar =
                         const SnackBar(content: Text('Key Copied !'));
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    Clipboard.setData(ClipboardData(text: "$_rnd"));
+                    //set coppy
+
+                    Clipboard.setData(ClipboardData(text: ""));
                   },
                   disabledColor: Colors.blue[400],
                   child: const Text(
