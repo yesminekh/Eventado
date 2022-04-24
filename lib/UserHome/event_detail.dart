@@ -1,11 +1,14 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:math';
 
 import '../constant/text_style.dart';
 import '../utils/notification.dart';
 import '../utils/size_config.dart';
 import '../widgets/ui_helper.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class ProductDetails extends StatefulWidget {
   const ProductDetails();
@@ -23,6 +26,12 @@ class _ProductDetailsState extends State<ProductDetails> {
   late SharedPreferences prefs;
   bool isFavorite = false;
   late Future<bool> fetchedEvents;
+  static const _chars =
+      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  Random _rnd = Random();
+
+  String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
+      length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 
   Future<bool> fetchEvents() async {
     prefs = await SharedPreferences.getInstance();
@@ -79,9 +88,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                       alignment: Alignment.centerRight,
                       child: InkWell(
                         customBorder: const CircleBorder(),
-                        onTap: () => //setState(() => isFavorite = !isFavorite),
-                            sendNotification(
-                                body: "Join the Room", title: "Eventado"),
+                        onTap: () => sendNotification(
+                            body: "Join the Room", title: "Eventado"),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Icon(
@@ -161,6 +169,21 @@ class _ProductDetailsState extends State<ProductDetails> {
                   children: <Widget>[
                     UIHelper.verticalSpace(8),
                   ],
+                ),
+                Text((_rnd).toString()),
+                const SizedBox(width: 20),
+                RaisedButton(
+                  onPressed: () {
+                    var snackBar =
+                        const SnackBar(content: Text('Key Copied !'));
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    Clipboard.setData(ClipboardData(text: "$_rnd"));
+                  },
+                  disabledColor: Colors.blue[400],
+                  child: const Text(
+                    "Copy",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ],
             ),

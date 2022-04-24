@@ -99,12 +99,11 @@ class _EventDetailPageState extends State<EventDetailPage>
                           buildEventTitle(),
                           UIHelper.verticalSpace(16),
                           buildEventDate(),
+                          UIHelper.verticalSpace(16),
+                          buildOrganizeInfo(),
                           UIHelper.verticalSpace(24),
                           buildAboutEvent(),
                           UIHelper.verticalSpace(24),
-                          getNFT(),
-                          UIHelper.verticalSpace(24),
-                          //...List.generate(10, (index) => ListTile(title: Text("Dummy content"))).toList(),
                         ],
                       ),
                     ),
@@ -228,9 +227,38 @@ class _EventDetailPageState extends State<EventDetailPage>
   }
 
   Widget buildEventTitle() {
-    return Text(
-      event.name,
-      style: headerStyle.copyWith(fontSize: 32),
+    return Row(
+      children: <Widget>[
+        Text(
+          event.name,
+          style: headerStyle.copyWith(fontSize: 32),
+        ),
+        Container(
+          padding: const EdgeInsets.all(2),
+          decoration: const ShapeDecoration(
+              shape: StadiumBorder(), color: primaryLight),
+          child: Row(
+            children: <Widget>[
+              UIHelper.horizontalSpace(8),
+              Text("Add NFT To Your Collection",
+                  style: subtitleStyle.copyWith(
+                      color: Theme.of(context).primaryColor)),
+              FloatingActionButton(
+                mini: true,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Nftpage(event),
+                    ),
+                  );
+                },
+                child: const Icon(Icons.add),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -246,10 +274,10 @@ class _EventDetailPageState extends State<EventDetailPage>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Text(event.eventDate.toString().substring(8, 10),
-                  style: monthStyle),
               Text(event.eventDate.toString().substring(5, 7),
                   style: titleStyle),
+              Text(event.eventDate.toString().substring(8, 10),
+                  style: monthStyle),
             ],
           ),
         ),
@@ -265,11 +293,35 @@ class _EventDetailPageState extends State<EventDetailPage>
           ],
         ),
         const Spacer(),
-        Container(
-          padding: const EdgeInsets.all(2),
-          decoration: const ShapeDecoration(
-              shape: StadiumBorder(), color: primaryLight),
+      ],
+    );
+  }
+
+  Widget buildOrganizeInfo() {
+    return Row(
+      children: <Widget>[
+        CircleAvatar(
+          child: Text(event.organizer[0]),
         ),
+        UIHelper.horizontalSpace(16),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(event.organizer, style: titleStyle),
+            UIHelper.verticalSpace(4),
+            const Text("Organizer", style: subtitleStyle),
+          ],
+        ),
+        const Spacer(),
+        TextButton(
+          child: Text("Follow",
+              style: TextStyle(color: Theme.of(context).primaryColor)),
+          onPressed: () {},
+          style: TextButton.styleFrom(
+            shape: const StadiumBorder(),
+            primary: primaryLight,
+          ),
+        )
       ],
     );
   }
@@ -282,6 +334,15 @@ class _EventDetailPageState extends State<EventDetailPage>
         UIHelper.verticalSpace(),
         Text(event.description, style: subtitleStyle),
         UIHelper.verticalSpace(8),
+        InkWell(
+          child: Text(
+            "Read more...",
+            style: TextStyle(
+                color: Theme.of(context).primaryColor,
+                decoration: TextDecoration.underline),
+          ),
+          onTap: () {},
+        ),
       ],
     );
   }
@@ -363,57 +424,6 @@ class _EventDetailPageState extends State<EventDetailPage>
             },
             child: Text(
               "Get a Ticket",
-              style: titleStyle.copyWith(
-                  color: Colors.white, fontWeight: FontWeight.normal),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget getNFT() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      color: Colors.white,
-      child: Row(
-        children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              const Text("Price", style: subtitleStyle),
-              UIHelper.verticalSpace(8),
-              RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                        text: "\$${event.price}",
-                        style: titleStyle.copyWith(
-                            color: Theme.of(context).primaryColor)),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const Spacer(),
-          const Spacer(),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              shape: const StadiumBorder(),
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              primary: Theme.of(context).primaryColor,
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Nftpage(event),
-                ),
-              );
-            },
-            child: Text(
-              "Get NFT now",
               style: titleStyle.copyWith(
                   color: Colors.white, fontWeight: FontWeight.normal),
             ),

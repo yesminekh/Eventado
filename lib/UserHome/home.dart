@@ -114,6 +114,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                buildSearchAppBar(),
                 UIHelper.verticalSpace(16),
                 buildUpComingEventList(),
                 UIHelper.verticalSpace(16),
@@ -137,6 +138,26 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         child: Badge(
           badgeContent: const Text('12'),
           child: const Icon(Icons.message_outlined),
+        ),
+      ),
+    );
+  }
+
+  Widget buildSearchAppBar() {
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      child: TextField(
+        style: TextStyle(color: Colors.white),
+        decoration: InputDecoration(
+          hintText: "Search...",
+          hintStyle: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24),
+          border:
+              UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+          enabledBorder:
+              UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+          focusedBorder:
+              UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
         ),
       ),
     );
