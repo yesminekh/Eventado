@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pim/UserHome/home.dart';
 import 'package:pim/singin.out/social_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../delayedAnimation.dart';
 import '../main.dart';
@@ -10,7 +12,7 @@ class WelcomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      backgroundColor: Color(0xFFEDECF2),
+      backgroundColor: const Color(0xFFEDECF2),
       body: SingleChildScrollView(
         child: Container(
           margin: const EdgeInsets.symmetric(
@@ -55,13 +57,24 @@ class WelcomePage extends StatelessWidget {
                         shape: const StadiumBorder(),
                         padding: const EdgeInsets.all(13)),
                     child: const Text('GET STARTED'),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SocialPage(),
-                        ),
-                      );
+                    onPressed: () async {
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      if (prefs.containsKey("userId")) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const MyHomePage(),
+                          ),
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SocialPage(),
+                          ),
+                        );
+                      }
                     },
                   ),
                 ),
