@@ -23,7 +23,9 @@ class _ProductDetailsState extends State<ProductDetails> {
   late String _description;
   late String _price;
   late String _organizer;
+  late String _Affiche;
   late SharedPreferences prefs;
+
   bool isFavorite = false;
   late Future<bool> fetchedEvents;
   static const _chars =
@@ -40,6 +42,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     _description = prefs.getString("eventDescription")!;
     _price = prefs.getString("eventPrice")!;
     _organizer = prefs.getString("eventOrg")!;
+    _Affiche = prefs.getString("eventImage")!;
 
     return true;
   }
@@ -69,8 +72,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                     aspectRatio: 1,
                     child: Container(
                         width: double.infinity,
-                        child: Image.asset("assets/images/Capture.PNG",
-                            width: 460, height: 215)),
+                        child:
+                            Image.network(_Affiche, width: 460, height: 215)),
                   ),
                 ),
                 Column(
@@ -179,7 +182,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     //set coppy
 
-                    Clipboard.setData(ClipboardData(text: ""));
+                    Clipboard.setData(const ClipboardData(text: ""));
                   },
                   disabledColor: Colors.blue[400],
                   child: const Text(

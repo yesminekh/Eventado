@@ -24,13 +24,13 @@ class _EventsState extends State<Events> {
     List<dynamic> eventsFromServer = json.decode(response.body);
     for (int i = 0; i < eventsFromServer.length; i++) {
       _events.add(EventsData(
-        eventsFromServer[i]["_id"],
-        eventsFromServer[i]["name"],
-        eventsFromServer[i]["date"],
-        eventsFromServer[i]["description"],
-        eventsFromServer[i]["Price"].toString(),
-        eventsFromServer[i]["organizer"],
-      ));
+          eventsFromServer[i]["_id"],
+          eventsFromServer[i]["name"],
+          eventsFromServer[i]["date"],
+          eventsFromServer[i]["description"],
+          eventsFromServer[i]["Price"].toString(),
+          eventsFromServer[i]["organizer"],
+          eventsFromServer[i]["Affiche"]));
     }
     print(eventsFromServer);
 
@@ -51,9 +51,9 @@ class _EventsState extends State<Events> {
         if (snapshot.hasData) {
           int _currentIndex;
           return Scaffold(
-              backgroundColor: Color(0xFFEDECF2),
+              backgroundColor: const Color(0xFFEDECF2),
               appBar: AppBar(
-                backgroundColor: Color(0xFFEDECF2),
+                backgroundColor: const Color(0xFFEDECF2),
                 elevation: 0,
                 title: const Text("My Events"),
                 leading: IconButton(
@@ -73,7 +73,8 @@ class _EventsState extends State<Events> {
                       _events[index].date,
                       _events[index].description,
                       _events[index].price,
-                      _events[index].organizer);
+                      _events[index].organizer,
+                      _events[index].Affiche);
                 },
               ),
               bottomNavigationBar: HomePageButtonNavigationBar(
@@ -100,9 +101,10 @@ class EventsData {
   final String description;
   final String price;
   final String organizer;
+  final String Affiche;
 
   EventsData(this.id, this.name, this.date, this.description, this.price,
-      this.organizer);
+      this.organizer, this.Affiche);
 
   @override
   String toString() {

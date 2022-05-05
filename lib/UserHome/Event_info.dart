@@ -11,9 +11,10 @@ class EventInfo extends StatelessWidget {
   final String _description;
   final String _price;
   final String _organizer;
+  final String _Affiche;
 
-  const EventInfo(
-      this._name, this._date, this._description, this._price, this._organizer);
+  const EventInfo(this._name, this._date, this._description, this._price,
+      this._organizer, this._Affiche);
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +27,7 @@ class EventInfo extends StatelessWidget {
           prefs.setString("eventDescription", _description);
           prefs.setString("eventPrice", _price);
           prefs.setString("eventOrg", _organizer);
+          prefs.setString("eventImage", _Affiche);
 
           Navigator.push(context,
               MaterialPageRoute(builder: (BuildContext context) {
@@ -36,8 +38,7 @@ class EventInfo extends StatelessWidget {
           children: [
             Container(
               margin: const EdgeInsets.fromLTRB(10, 10, 20, 10),
-              child: Image.asset("assets/images/Capture.PNG",
-                  width: 100, height: 94),
+              child: Image.network(_Affiche, width: 100, height: 94),
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
