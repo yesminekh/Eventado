@@ -114,6 +114,7 @@ class _LoginFormState extends State<LoginForm> {
                       //sharedpreferances
                       SharedPreferences prefs =
                           await SharedPreferences.getInstance();
+                      prefs.setString("token", userData["token"]);
                       prefs.setString("userId", userData["UserId"]);
                       prefs.setString("username", userData["username"]);
                       prefs.setString("f_name", userData["f_name"]);

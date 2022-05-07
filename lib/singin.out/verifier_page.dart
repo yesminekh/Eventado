@@ -1,7 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../delayedAnimation.dart';
 import '../main.dart';
 import '../UserHome/home.dart';
+import 'package:http/http.dart' as http;
+
+import '../utils/notification.dart';
 
 class Verifier extends StatelessWidget {
   @override
@@ -24,7 +30,7 @@ class Verifier extends StatelessWidget {
         body: SingleChildScrollView(
             child: Container(
           margin: const EdgeInsets.symmetric(
-            vertical: 100,
+            vertical: 200,
             horizontal: 30,
           ),
           child: Column(
@@ -33,14 +39,14 @@ class Verifier extends StatelessWidget {
                 margin: const EdgeInsets.symmetric(
                   horizontal: 40,
                 ),
-                child: const Text("please enter your verification code"),
+                child: const Text("Please enter your verification code here"),
               ),
-              SizedBox(height: 35),
+              const SizedBox(height: 35),
               VerifierForm(),
-              SizedBox(height: 35),
+              const SizedBox(height: 35),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  shape: StadiumBorder(),
+                  shape: const StadiumBorder(),
                   primary: color,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 25,
@@ -50,11 +56,54 @@ class Verifier extends StatelessWidget {
                 child: const Text(
                   'CONFIRM',
                 ),
-                onPressed: () {
+                onPressed: () async {
+                  late String token;
+                  var prefs = await SharedPreferences.getInstance();
+                  token = prefs.getString("token")!;
+                  print(token);
+                  Map<String, String> headers = {
+                    "Content-Type": "application/json; charset=UTF-8"
+                  };
+                  http
+                      .get(
+                          Uri.https("eventado.herokuapp.com",
+                              "/user/confirmation" + token),
+                          headers: headers)
+                      .then((http.Response response) async {
+                    if (response.statusCode == 200) {
+                      sendNotification(
+                          body: "Your account has been verified",
+                          title: "Welcome");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MyHomePage()));
+                    } else if (response.statusCode == 401) {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const AlertDialog(
+                              title: Text("Try again"),
+                              content: Text("User not found, please sign up."),
+                            );
+                          });
+                    } else if (response.statusCode == 400) {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const AlertDialog(
+                              title: Text("Information"),
+                              content: Text(
+                                  "The confirmation link expired, please reverify."),
+                            );
+                          });
+                    }
+                  });
+
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MyHomePage(),
+                      builder: (context) => const MyHomePage(),
                     ),
                   );
                 },
@@ -111,22 +160,22 @@ class _VerifierFormState extends State<VerifierForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Expanded(
             child: TextField(
               decoration: InputDecoration(
-                hintText: "0",
+                hintText: ".",
                 labelStyle: TextStyle(
                   color: Colors.grey[400],
                 ),
-                border: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(
-                    const Radius.circular(0.0),
+                border: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(0.0),
                   ),
-                  borderSide: new BorderSide(
+                  borderSide: BorderSide(
                     color: Colors.black,
                     width: 1.0,
                   ),
@@ -135,22 +184,22 @@ class _VerifierFormState extends State<VerifierForm> {
               keyboardType: TextInputType.number,
             ),
           ),
-          Expanded(
+          const Expanded(
               child: SizedBox(
             width: 20,
           )),
           Expanded(
             child: TextField(
               decoration: InputDecoration(
-                hintText: "0",
+                hintText: ".",
                 labelStyle: TextStyle(
                   color: Colors.grey[400],
                 ),
-                border: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(
-                    const Radius.circular(0.0),
+                border: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(0.0),
                   ),
-                  borderSide: new BorderSide(
+                  borderSide: BorderSide(
                     color: Colors.black,
                     width: 1.0,
                   ),
@@ -159,22 +208,22 @@ class _VerifierFormState extends State<VerifierForm> {
               keyboardType: TextInputType.number,
             ),
           ),
-          Expanded(
+          const Expanded(
               child: SizedBox(
-            width: 20,
+            width: 15,
           )),
           Expanded(
             child: TextField(
               decoration: InputDecoration(
-                hintText: "0",
+                hintText: ".",
                 labelStyle: TextStyle(
                   color: Colors.grey[400],
                 ),
-                border: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(
-                    const Radius.circular(0.0),
+                border: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(0.0),
                   ),
-                  borderSide: new BorderSide(
+                  borderSide: BorderSide(
                     color: Colors.black,
                     width: 1.0,
                   ),
@@ -183,22 +232,22 @@ class _VerifierFormState extends State<VerifierForm> {
               keyboardType: TextInputType.number,
             ),
           ),
-          Expanded(
+          const Expanded(
               child: SizedBox(
             width: 20,
           )),
           Expanded(
             child: TextField(
               decoration: InputDecoration(
-                hintText: "0",
+                hintText: ".",
                 labelStyle: TextStyle(
                   color: Colors.grey[400],
                 ),
-                border: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(
-                    const Radius.circular(0.0),
+                border: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(0.0),
                   ),
-                  borderSide: new BorderSide(
+                  borderSide: BorderSide(
                     color: Colors.black,
                     width: 1.0,
                   ),

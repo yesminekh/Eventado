@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pim/UserHome/home.dart';
 import 'package:pim/singin.out/facebook.dart';
+import 'package:pim/singin.out/verifier_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../main.dart';
-import 'avatr_page.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -10,10 +10,10 @@ class SingUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFEDECF2),
+      backgroundColor: const Color(0xFFEDECF2),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Color(0xFFEDECF2),
+        backgroundColor: const Color(0xFFEDECF2),
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
@@ -47,7 +47,7 @@ class SingUp extends StatelessWidget {
               ),
             ),
             const Text(
-              "Complete your details or continue \nwith social media",
+              "Complete your details or continue \nwith social media account",
               textAlign: TextAlign.center,
             ),
             Container(
@@ -55,7 +55,7 @@ class SingUp extends StatelessWidget {
                 vertical: 14,
                 horizontal: 40,
               ),
-              child: Row(
+              child: Column(
                 children: [
                   ElevatedButton(
                     onPressed: () {
@@ -74,6 +74,7 @@ class SingUp extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
+                        Text("connect with Facebook"),
                         Icon(Icons.facebook),
                       ],
                     ),
@@ -90,6 +91,12 @@ class SingUp extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        const Text(
+                          "connect with Google",
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
                         Image.asset(
                           'assets/images/google.jpg',
                           height: 20,
@@ -283,12 +290,30 @@ class _SinupFormFormState extends State<SinupForm> {
                   http
                       .post(Uri.https("eventado.herokuapp.com", "/user"),
                           headers: headers, body: json.encode(userData))
-                      .then((http.Response response) {
+                      .then((http.Response response) async {
                     if (response.statusCode == 201) {
+                      Map<String, dynamic> userData =
+                          json.decode(response.body);
+
+                      //sharedpreferances
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      prefs.setString("token", userData["token"]);
+                      prefs.setString("userId", userData["UserId"]);
+                      prefs.setString("username", userData["username"]);
+                      prefs.setString("f_name", userData["f_name"]);
+
+                      prefs.setString("email", _email!);
+
+                      print(prefs.getString("userId"));
+                      print(prefs.getString("username"));
+                      print(prefs.getString("f_name"));
+                      print(prefs.getString("email"));
+
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => AvatarPage(),
+                          builder: (context) => Verifier(),
                         ),
                       );
                     } else {
@@ -297,7 +322,8 @@ class _SinupFormFormState extends State<SinupForm> {
                           builder: (BuildContext) {
                             return const AlertDialog(
                               title: Text("Information"),
-                              content: Text("An error has occurred. Try Again"),
+                              content:
+                                  Text("Email Address is Already Registered!"),
                             );
                           });
                     }
