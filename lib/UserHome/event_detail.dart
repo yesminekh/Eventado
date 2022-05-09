@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -169,22 +167,23 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       var random = Random();
                       int min = 5540;
                       int max = 5555;
                       var randomNumber = min + random.nextInt(max - min);
 
                       print(randomNumber);
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content:
-                            Text("Key coppied----" + randomNumber.toString()),
+                      ClipboardData data =
+                          ClipboardData(text: randomNumber.toString());
+                      await Clipboard.setData(data);
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text("Key copied !"),
                       ));
                     },
                     child: const Text('Get Your Key')),
                 AlertDialog(
                   title: Text("Key for " + _name),
-                  // content: Text(a.toString()),
                 ),
               ],
             ),
@@ -200,5 +199,3 @@ class _ProductDetailsState extends State<ProductDetails> {
     );
   }
 }
-
-class MAX {}
