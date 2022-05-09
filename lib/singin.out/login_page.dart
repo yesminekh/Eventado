@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pim/singin.out/social_page.dart';
+import 'package:pim/singin.out/verifier_page.dart';
 
 import '../main.dart';
 import '../UserHome/home.dart';
@@ -16,7 +18,6 @@ class _LoginFormState extends State<LoginForm> {
   late String? _email;
   late String? _password;
 
-  final String _baseUrl = "eventado.herokuapp.com";
   final GlobalKey<FormState> _keyForm = GlobalKey<FormState>();
 
   @override
@@ -117,8 +118,9 @@ class _LoginFormState extends State<LoginForm> {
                       prefs.setString("token", userData["token"]);
                       prefs.setString("userId", userData["UserId"]);
                       prefs.setString("username", userData["username"]);
-                      prefs.setString("f_name", userData["f_name"]);
-                      prefs.setString("email", _email!);
+                      prefs.setString("f_name", userData["f_name"]!);
+                      prefs.setString("email", userData["email"]!);
+                      print(prefs.getString("token"));
                       print(prefs.getString("userId"));
                       print(prefs.getString("username"));
                       print(prefs.getString("f_name"));
@@ -138,14 +140,22 @@ class _LoginFormState extends State<LoginForm> {
                             );
                           });
                     } else if (response.statusCode == 201) {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return const AlertDialog(
-                              title: Text("Information"),
-                              content: Text("email not verified!"),
-                            );
-                          });
+                      showAlertDialog(context);
+                      Map<String, dynamic> userData =
+                          json.decode(response.body);
+
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      prefs.setString("token", userData["token"]);
+                      prefs.setString("userId", userData["UserId"]);
+                      prefs.setString("username", userData["username"]);
+                      prefs.setString("f_name", userData["f_name"]!);
+                      prefs.setString("email", userData["email"]!);
+                      print(prefs.getString("token"));
+                      print(prefs.getString("userId"));
+                      print(prefs.getString("username"));
+                      print(prefs.getString("f_name"));
+                      print(prefs.getString("email"));
                     }
                   });
                 }
@@ -156,4 +166,40 @@ class _LoginFormState extends State<LoginForm> {
       ),
     );
   }
+}
+
+showAlertDialog(BuildContext context) {
+  // set up the buttons
+  Widget cancelButton = TextButton(
+    child: const Text("Cancel"),
+    onPressed: () {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => SocialPage()));
+    },
+  );
+  Widget continueButton = TextButton(
+    child: const Text("Continue"),
+    onPressed: () {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => Verifier()));
+    },
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: const Text("Information"),
+    content: const Text("You have to verify your account , Do it now?"),
+    actions: [
+      cancelButton,
+      continueButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }

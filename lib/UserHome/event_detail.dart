@@ -26,14 +26,8 @@ class _ProductDetailsState extends State<ProductDetails> {
   late String _Affiche;
   late SharedPreferences prefs;
 
-  bool isFavorite = false;
+  bool isFavorite = true;
   late Future<bool> fetchedEvents;
-  static const _chars =
-      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-  Random _rnd = Random();
-
-  String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
-      length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 
   Future<bool> fetchEvents() async {
     prefs = await SharedPreferences.getInstance();
@@ -173,22 +167,24 @@ class _ProductDetailsState extends State<ProductDetails> {
                     UIHelper.verticalSpace(8),
                   ],
                 ),
-                Text((getRandomString(20))),
                 const SizedBox(height: 20),
-                RaisedButton(
-                  onPressed: () {
-                    var snackBar =
-                        const SnackBar(content: Text('Key Copied !'));
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    //set coppy
+                ElevatedButton(
+                    onPressed: () {
+                      var random = Random();
+                      int min = 5540;
+                      int max = 5555;
+                      var randomNumber = min + random.nextInt(max - min);
 
-                    Clipboard.setData(const ClipboardData(text: ""));
-                  },
-                  disabledColor: Colors.blue[400],
-                  child: const Text(
-                    "Copy",
-                    style: TextStyle(color: Colors.white),
-                  ),
+                      print(randomNumber);
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content:
+                            Text("Key coppied----" + randomNumber.toString()),
+                      ));
+                    },
+                    child: const Text('Get Your Key')),
+                AlertDialog(
+                  title: Text("Key for " + _name),
+                  // content: Text(a.toString()),
                 ),
               ],
             ),
@@ -204,3 +200,5 @@ class _ProductDetailsState extends State<ProductDetails> {
     );
   }
 }
+
+class MAX {}

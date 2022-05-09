@@ -300,11 +300,11 @@ class _SinupFormFormState extends State<SinupForm> {
                           await SharedPreferences.getInstance();
                       prefs.setString("token", userData["token"]);
                       prefs.setString("userId", userData["UserId"]);
-                      prefs.setString("username", userData["username"]);
-                      prefs.setString("f_name", userData["f_name"]);
-
+                      prefs.setString("username", userData["username"]!);
+                      prefs.setString("f_name", userData["f_name"]!);
                       prefs.setString("email", _email!);
 
+                      print(prefs.getString("token"));
                       print(prefs.getString("userId"));
                       print(prefs.getString("username"));
                       print(prefs.getString("f_name"));

@@ -233,31 +233,6 @@ class _EventDetailPageState extends State<EventDetailPage>
           event.name,
           style: headerStyle.copyWith(fontSize: 32),
         ),
-        Container(
-          padding: const EdgeInsets.all(2),
-          decoration: const ShapeDecoration(
-              shape: StadiumBorder(), color: primaryLight),
-          child: Row(
-            children: <Widget>[
-              UIHelper.horizontalSpace(8),
-              Text("Add NFT To Your Collection",
-                  style: subtitleStyle.copyWith(
-                      color: Theme.of(context).primaryColor)),
-              FloatingActionButton(
-                mini: true,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Nftpage(event),
-                    ),
-                  );
-                },
-                child: const Icon(Icons.add),
-              ),
-            ],
-          ),
-        ),
       ],
     );
   }
@@ -342,6 +317,31 @@ class _EventDetailPageState extends State<EventDetailPage>
                 decoration: TextDecoration.underline),
           ),
           onTap: () {},
+        ),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          decoration: const ShapeDecoration(
+              shape: StadiumBorder(), color: primaryLight),
+          child: Row(
+            children: <Widget>[
+              UIHelper.horizontalSpace(8),
+              Text("Discover Our NFT",
+                  style: subtitleStyle.copyWith(
+                      color: Theme.of(context).primaryColor)),
+              FloatingActionButton(
+                mini: true,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Nftpage(event),
+                    ),
+                  );
+                },
+                child: const Icon(Icons.arrow_right_alt_outlined),
+              ),
+            ],
+          ),
         ),
       ],
     );

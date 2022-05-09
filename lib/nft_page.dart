@@ -9,8 +9,6 @@ import 'package:pim/widgets/ui_helper.dart';
 import 'package:pim/constant/text_style.dart';
 
 import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'models/event_model.dart';
 
@@ -153,7 +151,7 @@ class _NftpageState extends State<Nftpage> with TickerProviderStateMixin {
       children: <Widget>[
         const Text("About", style: headerStyle),
         UIHelper.verticalSpace(),
-        Text(
+        const Text(
             "this is one of the first NFT's available for om kolthoum concert on eventado application",
             style: subtitleStyle),
         UIHelper.verticalSpace(2),
@@ -167,7 +165,7 @@ class _NftpageState extends State<Nftpage> with TickerProviderStateMixin {
       children: <Widget>[
         const Text("TOKEN ID", style: headerStyle),
         UIHelper.verticalSpace(),
-        Text(
+        const Text(
             "105412073336139865871856758689961865379765593412174393695306829764487372865537",
             style: subtitleStyle),
         UIHelper.verticalSpace(2),
@@ -181,7 +179,7 @@ class _NftpageState extends State<Nftpage> with TickerProviderStateMixin {
       children: <Widget>[
         const Text(" Contact Address", style: headerStyle),
         UIHelper.verticalSpace(),
-        Text("0x495f947276749Ce646f68AC8c248420045cb7b5e",
+        const Text("0x495f947276749Ce646f68AC8c248420045cb7b5e",
             style: subtitleStyle),
         UIHelper.verticalSpace(2),
       ],
@@ -269,7 +267,7 @@ class _NftpageState extends State<Nftpage> with TickerProviderStateMixin {
                               onTap: () {
                                 Navigator.of(context).pop();
                               },
-                              child: CircleAvatar(
+                              child: const CircleAvatar(
                                 child: Icon(Icons.close),
                                 backgroundColor: Colors.red,
                               ),
@@ -279,7 +277,7 @@ class _NftpageState extends State<Nftpage> with TickerProviderStateMixin {
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
-                                Text("connect etherum address"),
+                                const Text("connect etherum address"),
                                 Padding(
                                   padding: EdgeInsets.all(8.0),
                                   child: TextFormField(),
@@ -287,7 +285,7 @@ class _NftpageState extends State<Nftpage> with TickerProviderStateMixin {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: RaisedButton(
-                                      child: Text("Buy Now"),
+                                      child: const Text("Buy Now"),
                                       onPressed: () {
                                         var prix = event.price;
                                         Navigator.push(
@@ -305,7 +303,7 @@ class _NftpageState extends State<Nftpage> with TickerProviderStateMixin {
                     );
                   });
             },
-            child: Text("Buy nft "),
+            child: const Text("Buy nft "),
           ) /*async {
               print(event.id);
 

@@ -38,7 +38,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   late String? _email;
   late SharedPreferences prefs;
 
-  final String _baseUrl = "10.0.2.2:3001";
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   late Future<bool> fetchedUser;
@@ -176,6 +175,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       'SAVE',
                     ),
                     onPressed: () {
+                      print(_id);
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
 
@@ -189,8 +189,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           "Content-Type": "application/json; charset=UTF-8"
                         };
                         http
-                            .put(Uri.http(_baseUrl, "/user/$_id"),
-                                headers: headers, body: json.encode(userData))
+                            .put(
+                                Uri.http(
+                                    "eventado.herokuapp.com", "/user/" + _id!),
+                                headers: headers,
+                                body: json.encode(userData))
                             .then((http.Response response) {
                           if (response.statusCode == 201) {
                             showDialog(

@@ -9,6 +9,8 @@ import 'package:pim/widgets/bottom_navigation_bar.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'contactus_page.dart';
+
 class Profile extends StatefulWidget {
   const Profile();
 
@@ -197,6 +199,14 @@ class Body extends StatelessWidget {
             press: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => changepaswrd()));
+            },
+          ),
+          ProfileMenu(
+            text: "Contact Us",
+            icon: const Icon(Icons.contact_page),
+            press: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const contact_us()));
             },
           ),
           ProfileMenu(

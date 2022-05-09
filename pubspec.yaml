@@ -49,6 +49,8 @@ dependencies:
   fluttertoast: ^8.0.9
   badges: ^2.0.2
   webview_flutter: ^3.0.2
+  mb_contact_form: ^0.0.1
+  mb_button: ^1.0.4
   
 
   

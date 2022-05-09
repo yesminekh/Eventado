@@ -57,9 +57,10 @@ class Verifier extends StatelessWidget {
                   'CONFIRM',
                 ),
                 onPressed: () async {
-                  late String token;
+                  String? token = "";
+                  print(token);
                   var prefs = await SharedPreferences.getInstance();
-                  token = prefs.getString("token")!;
+                  token = prefs.getString("token");
                   print(token);
                   Map<String, String> headers = {
                     "Content-Type": "application/json; charset=UTF-8"
@@ -67,7 +68,7 @@ class Verifier extends StatelessWidget {
                   http
                       .get(
                           Uri.https("eventado.herokuapp.com",
-                              "/user/confirmation" + token),
+                              "/user/confirmation/" + token!),
                           headers: headers)
                       .then((http.Response response) async {
                     if (response.statusCode == 200) {
@@ -99,13 +100,6 @@ class Verifier extends StatelessWidget {
                           });
                     }
                   });
-
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const MyHomePage(),
-                    ),
-                  );
                 },
               ),
               Align(
@@ -121,13 +115,10 @@ class Verifier extends StatelessWidget {
                       )),
                       Expanded(
                         child: TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Verifier(),
-                              ),
-                            );
+                          onPressed: () async {
+                            Map<String, String> headers = {
+                              "Content-Type": "application/json; charset=UTF-8"
+                            };
                           },
                           child: const DelayedAnimation(
                             delay: 6500,
@@ -157,7 +148,15 @@ class VerifierForm extends StatefulWidget {
 }
 
 class _VerifierFormState extends State<VerifierForm> {
+  final _text = TextEditingController();
+  final bool _validate = false;
   @override
+  @override
+  void dispose() {
+    _text.dispose();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -190,8 +189,10 @@ class _VerifierFormState extends State<VerifierForm> {
           )),
           Expanded(
             child: TextField(
+              controller: _text,
               decoration: InputDecoration(
                 hintText: ".",
+                errorText: _validate ? 'Value Can\'t Be Empty' : null,
                 labelStyle: TextStyle(
                   color: Colors.grey[400],
                 ),
@@ -214,7 +215,9 @@ class _VerifierFormState extends State<VerifierForm> {
           )),
           Expanded(
             child: TextField(
+              controller: _text,
               decoration: InputDecoration(
+                errorText: _validate ? 'Value Can\'t Be Empty' : null,
                 hintText: ".",
                 labelStyle: TextStyle(
                   color: Colors.grey[400],
@@ -238,7 +241,9 @@ class _VerifierFormState extends State<VerifierForm> {
           )),
           Expanded(
             child: TextField(
+              controller: _text,
               decoration: InputDecoration(
+                errorText: _validate ? 'Value Can\'t Be Empty' : null,
                 hintText: ".",
                 labelStyle: TextStyle(
                   color: Colors.grey[400],
